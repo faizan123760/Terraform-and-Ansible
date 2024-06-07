@@ -26,7 +26,8 @@ resource "aws_instance" "example" {
 
 Initialize the configuration directory.
 Command: terraform init
-Plan:
+
+# Plan:
 
 Generate an execution plan.
 Command: terraform plan
@@ -35,11 +36,13 @@ Command: terraform plan
 
 Apply the changes to reach the desired state.
 Command: terraform apply
+
 # Destroy:
 
 Remove all infrastructure managed by the configuration.
 Command: terraform destroy
-Tools and Best Practices:
+
+# Tools and Best Practices:
 
 # Terraform CLI: Command-line interface to manage Terraform workflows.
 
@@ -64,7 +67,8 @@ Key Features:
 Agentless: Connects to remote nodes over SSH.
 Idempotent: Ensures the system reaches the desired state without unintended changes.
 Modular: Uses modules to perform tasks (e.g., install packages, manage services).
-Basic Workflow:
+
+# Basic Workflow:
 Install Ansible:
 
 Install Ansible on a control node.
@@ -78,7 +82,8 @@ Write playbooks to define tasks.
 # Run Playbook:
 Execute the playbook to apply changes.
 Command: ansible-playbook site.yml
-Tools and Best Practices:
+
+# Tools and Best Practices:
 # Ansible Galaxy:
 Use and share Ansible roles.
 Command: ansible-galaxy install <role_name>
