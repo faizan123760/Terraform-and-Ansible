@@ -84,6 +84,187 @@ Reusable configurations to manage infrastructure as code efficiently.
 Store Terraform configurations in version control systems like Git.
 Implement CI/CD pipelines to automate Terraform workflows.
 
+# Defining Infrastructure as Code
+## Basic Infrastructure Configuration:
+### Create a Basic EC2 Instance:
+
+Add the following to your main.tf file:
+
+```
+
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "TerraformExample"
+  }
+}
+
+
+
+```
+
+
+## Networking and Security Groups:
+
+Define a VPC, subnets, and security groups in your main.tf file:
+hcl
+
+```
+
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "main-vpc"
+  }
+}
+
+resource "aws_subnet" "subnet" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "us-west-2a"
+}
+
+resource "aws_security_group" "allow_ssh" {
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+```
+
+
+## Create a More Complex EC2 Instance:
+
+Update the aws_instance resource to use the VPC and security group
+
+```
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.subnet.id
+  security_groups = [aws_security_group.allow_ssh.name]
+
+  tags = {
+    Name = "TerraformExample"
+  }
+}
+
+
+```
+
+## Managing State and Collaboration
+## Remote State Management:
+Configure Remote State Storage:
+
+Use a backend to store the state file remotely (e.g., S3 for AWS
+
+```
+
+terraform {
+  backend "s3" {
+    bucket = "my-terraform-state-bucket"
+    key    = "path/to/my/key"
+    region = "us-west-2"
+  }
+}
+
+
+
+```
+
+# Automation and CI/CD
+## Integrate with CI/CD Tools:
+### Using Jenkins:
+
+```
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo/your-terraform-project.git'
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -auto-approve'
+            }
+        }
+    }
+}
+
+
+```
+
+### Using GitHub Actions:
+
+```
+
+name: 'Terraform CI/CD'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+
+```
+
+
 # Ansible
 
 ## Overview:
