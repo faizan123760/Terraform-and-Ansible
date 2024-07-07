@@ -289,6 +289,18 @@ sudo apt-get install ansible (on Debian-based systems).
 ## Inventory:
 Define the hosts to manage.
 
+Inventory: inventory
+
+```
+
+[webservers]
+webserver1 ansible_host=192.168.1.10
+webserver2 ansible_host=192.168.1.11
+
+
+```
+
+
 ## Playbook:
 
 Write playbooks to define tasks.
