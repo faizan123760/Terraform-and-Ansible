@@ -343,6 +343,30 @@ ansible-galaxy install <role_name>
 
 Organize playbooks into reusable roles.
 
+```
+
+my-playbook/
+├── inventory
+├── site.yml
+└── roles
+    └── apache
+        ├── defaults
+        │   └── main.yml
+        ├── handlers
+        │   └── main.yml
+        ├── tasks
+        │   └── main.yml
+        ├── templates
+        │   └── httpd.conf.j2
+        ├── vars
+        │   └── main.yml
+        └── files
+            └── index.html
+
+
+```
+
+
 ## Vault:
 
 Encrypt sensitive data in playbooks.
