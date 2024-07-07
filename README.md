@@ -293,6 +293,21 @@ Define the hosts to manage.
 
 Write playbooks to define tasks.
 
+Playbook: site.yml
+
+```
+
+---
+- name: Install and configure Apache
+  hosts: webservers
+  become: yes
+
+  roles:
+    - apache
+
+
+```
+
 ## Run Playbook:
 Execute the playbook to apply changes.
 
