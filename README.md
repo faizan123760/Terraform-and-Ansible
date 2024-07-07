@@ -369,7 +369,19 @@ my-playbook/
 
 ## Vault:
 
-Encrypt sensitive data in playbooks.
+Encrypt sensitive data in playbooks.Ansible Vault is a feature that allows you to securely store and manage sensitive data such as passwords,
+keys, and other secrets within your Ansible projects. This feature is particularly useful for maintaining security and preventing sensitive information from being exposed in plain text.
+
+
+```
+
+# secrets.yml
+db_password: mysecretpassword
+api_key: myapikey
+
+
+```
+
 
 ```
 
